@@ -1,0 +1,72 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
+*.egg-info/
+*.egg
+*.manifest
+*.spec
+
+# Byte-compiled / optimized / DLL files
+*.so
+*.dll
+
+# Virtual environments
+venv/
+env/
+.venv/
+.env/
+
+# Distribution / packaging
+build/
+dist/
+wheels/
+*.lock
+
+# --- Flask / Django / FastAPI ---
+instance/
+*.db
+*.sqlite3
+*.sqlite
+migrations/
+
+# --- Node.js / Frontend ---
+node_modules/
+dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# --- Environment variables ---
+.env
+.env.*
+
+# --- Logs ---
+*.log
+logs/
+debug.log
+
+# --- Editor and OS files ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- Testing and Coverage ---
+.coverage
+coverage.xml
+htmlcov/
+.pytest_cache/
+junit.xml
+
+# --- Cache ---
+*.cache
+__snapshots__/
+
+# --- Other Build Artifacts ---
+*.out
+*.pid
+*.seed
+*.orig
