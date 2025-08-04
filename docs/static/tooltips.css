@@ -1,76 +1,40 @@
-/* ===== Tooltip Base ===== */
 .tooltip {
-  position: relative;
   display: inline-block;
-  margin-left: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  color: #0078d7;
-  background-color: #e0f0ff;
+  background: #6a9eff;
+  color: #222;
+  font-weight: 700;
   border-radius: 50%;
   width: 18px;
   height: 18px;
-  font-size: 12px;
-  text-align: center;
   line-height: 18px;
+  text-align: center;
+  cursor: help;
+  margin-left: 6px;
+  position: relative;
   user-select: none;
-  transition: background-color 0.2s ease;
+  font-size: 12px;
+  font-family: monospace;
 }
 
-.tooltip:hover {
-  background-color: #b7e0ff;
-}
-
-/* ===== Tooltip Text ===== */
-.tooltip::after {
+.tooltip:hover::after,
+.tooltip:focus::after {
   content: attr(data-tooltip);
   position: absolute;
-  bottom: 125%; /* Position above the icon */
-  left: 50%;
-  transform: translateX(-50%) scale(0.8);
-  background-color: #333;
-  color: #fff;
-  padding: 6px 10px;
-  border-radius: 6px;
-  white-space: normal;
-  width: max-content;
-  max-width: 220px;
-  font-size: 13px;
-  text-align: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: 
-    opacity 0.3s ease,
-    transform 0.3s ease;
-  z-index: 10;
-}
-
-/* ===== Tooltip Arrow ===== */
-.tooltip::before {
-  content: "";
-  position: absolute;
-  bottom: 115%;
   left: 50%;
   transform: translateX(-50%);
-  border-width: 6px;
-  border-style: solid;
-  border-color: transparent transparent #333 transparent;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 9;
-}
-
-/* ===== Show Tooltip on Hover ===== */
-.tooltip:hover::after,
-.tooltip:hover::before {
-  opacity: 1;
-  transform: translateX(-50%) scale(1);
-}
-
-/* ===== Small Screen Adjustments ===== */
-@media (max-width: 600px) {
-  .tooltip::after {
-    font-size: 12px;
-    max-width: 180px;
-  }
+  bottom: 130%;
+  background: #1e1e2f;
+  color: #eee;
+  padding: 6px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: normal;
+  z-index: 10;
+  box-shadow: 0 0 5px #000a;
+  pointer-events: none;
+  opacity: 0.95;
+  transition: opacity 0.2s ease-in-out;
+  width: max-content;
+  max-width: 220px;
 }
