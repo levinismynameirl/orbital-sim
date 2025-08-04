@@ -10,10 +10,11 @@
   text-align: center;
   cursor: help;
   margin-left: 6px;
-  position: relative;
+  position: relative; /* important for absolute child */
   user-select: none;
   font-size: 12px;
   font-family: monospace;
+  z-index: 1000; /* ensure tooltip container itself is above inputs */
 }
 
 .tooltip:hover::after,
@@ -22,7 +23,7 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  bottom: 130%;
+  bottom: 140%;  /* slightly more above the question mark */
   background: #1e1e2f;
   color: #eee;
   padding: 6px 10px;
@@ -30,9 +31,9 @@
   white-space: nowrap;
   font-size: 13px;
   font-weight: normal;
-  z-index: 10;
+  z-index: 2000; /* very high to overlay inputs */
   box-shadow: 0 0 5px #000a;
-  pointer-events: none;
+  pointer-events: auto; /* allow interaction */
   opacity: 0.95;
   transition: opacity 0.2s ease-in-out;
   width: max-content;

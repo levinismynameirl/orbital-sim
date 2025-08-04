@@ -1,19 +1,32 @@
 /* General container and layout */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;  /* remove default padding to avoid scroll */
+}
+
 body {
   font-family: Arial, sans-serif;
   background: #1e1e2f;
   color: #ddd;
-  margin: 0;
-  padding: 20px;
+  
+  display: flex;              /* enable flexbox */
+  justify-content: center;    /* center horizontally */
+  align-items: center;        /* center vertically */
+  
+  padding: 20px;              /* optional padding */
+  box-sizing: border-box;     /* include padding in size */
+  min-height: 100vh;          /* full viewport height */
 }
 
 .container {
   max-width: 600px;
-  margin: 0 auto;
+  width: 100%;               /* full width within max */
   background: #292940;
   padding: 25px 30px;
   border-radius: 8px;
   box-shadow: 0 0 12px #0f0f1a;
+  box-sizing: border-box;
 }
 
 h1 {
@@ -21,6 +34,7 @@ h1 {
   margin-bottom: 20px;
 }
 
+/* rest remains unchanged */
 .input-group {
   margin-bottom: 15px;
 }
