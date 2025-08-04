@@ -1,21 +1,66 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Orbital Mechanics Simulator</title>
-    <link rel="stylesheet" href="static/style.css">
-    <script defer src="static/orbitalCalc.js"></script>
+    <link rel="stylesheet" href="static/style.css" />
+    <link rel="stylesheet" href="static/tooltips.css" />
+    <script type="module" src="static/script.js" defer></script>
 </head>
 <body>
     <h1>Orbital Mechanics Simulator</h1>
     <form id="orbit-form">
         <label>Your Mass (kg): <input type="number" step="any" id="mass" required></label><br>
-        <label>Your Speed (m/s): <input type="number" step="any" id="speed" required></label><br>
+        <label>Your Speed (m/s): <input type="number" step="any" id="velocity" required></label><br>
         <label>Distance from Center (m): <input type="number" step="any" id="distance" required></label><br>
         <label>Planet Mass (kg): <input type="number" step="any" id="planet_mass" required></label><br>
-        <button type="submit">Calculate</button>
+        <button type="submit" id="calculateBtn">Calculate</button>
     </form>
 
-    <div id="results"></div>
+    <!-- Basic Results -->
+    <div id="results" style="margin-top:1em;">
+      <p>Specific Orbital Energy: <span id="energyOutput">-</span></p>
+      <p>Orbital Period (s): <span id="periodOutput">-</span></p>
+      <p>Standard Gravitational Parameter (μ): <span id="muOutput">-</span></p>
+    </div>
+
+    <!-- Advanced Mode Toggle -->
+    <label>
+      <input type="checkbox" id="advancedToggle" />
+      Show Advanced Orbital Parameters
+    </label>
+
+    <div id="advancedSection" style="display:none; margin-top: 1em;">
+      <div class="input-group">
+        <label>
+          Apoapsis (m)
+          <span class="tooltip" data-tooltip="Farthest point in orbit from planet center">?</span>
+        </label>
+        <input type="number" id="apoapsis" placeholder="Optional" />
+      </div>
+
+      <div class="input-group">
+        <label>
+          Periapsis (m)
+          <span class="tooltip" data-tooltip="Closest point in orbit from planet center">?</span>
+        </label>
+        <input type="number" id="periapsis" placeholder="Optional" />
+      </div>
+
+      <div class="input-group">
+        <label>
+          Desired Delta-v (m/s)
+          <span class="tooltip" data-tooltip="Approximate velocity change needed to reach target orbit">?</span>
+        </label>
+        <input type="number" id="deltaV" placeholder="Optional" />
+      </div>
+    </div>
+
+    <div id="outputAdvanced" style="margin-top: 1em; display:none;">
+      <p>Eccentricity: <span id="eccentricity">-</span></p>
+      <p>Escape Velocity: <span id="escapeVelocity">-</span> m/s</p>
+      <p>Orbit Escape Check: <span id="escapeCheck">-</span></p>
+      <p>Estimated Delta-v Required: <span id="deltaVRequired">-</span> m/s</p>
+    </div>
 </body>
 </html>
