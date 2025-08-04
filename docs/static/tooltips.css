@@ -22,7 +22,7 @@
   content: attr(data-tooltip);
   position: absolute;
   left: 50%;
-  bottom: 140%; /* above the tooltip icon */
+  bottom: 140%; /* position above the tooltip icon */
   transform: translateX(-50%);
   background: #1e1e2f;
   color: #eee;
@@ -30,16 +30,15 @@
   border-radius: 4px;
   font-size: 13px;
   font-weight: normal;
-  white-space: normal;    /* allow wrapping */
-  max-width: 300px;       /* max width for tooltip */
-  width: max-content;     /* size to content */
+  white-space: normal;      /* allow wrapping */
+  max-width: 300px;         /* max width for tooltip */
+  width: auto;              /* let width adjust with content */
   box-shadow: 0 0 5px #000a;
   pointer-events: auto;
   opacity: 0.95;
   transition: opacity 0.2s ease-in-out;
-  word-wrap: break-word;  /* break long words */
+  word-wrap: break-word;    /* break long words */
   z-index: 2000;
-  /* add this to prevent layout shift */
   transform-origin: bottom center;
 }
 
@@ -48,7 +47,7 @@
   content: '';
   position: absolute;
   left: 50%;
-  bottom: 120%; /* little above icon but below tooltip box */
+  bottom: 120%; /* position arrow just below tooltip box */
   transform: translateX(-50%);
   border-width: 6px;
   border-style: solid;
