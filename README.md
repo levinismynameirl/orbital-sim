@@ -1,43 +1,30 @@
-# Orbital Simulator (ORS)
-**Alpha Release**
+# Orbital Simulator (ORS) — Backend Branch
 
-This project is a web-based orbital simulator built with Flask, allowing users to input parameters and calculate key orbital mechanics values such as specific orbital energy and orbital period.
-
----
-
-## Project Overview
-
-The Orbital Simulator (ORS) is designed to help visualize and calculate orbital parameters based on classical physics formulas. It supports* input of mass, velocity, distance from the planetary center, and the planetary mass to compute values like specific orbital energy and orbital period.
-
-This tool is primarily intended for educational use, simulation, and experimentation with orbital mechanics concepts.
-
-**note that it is heavily simplified as only just basic data is requested and outputted. we are still developing this website*
+**⚠️ This branch is currently _not_ maintained for active use or deployment.**
 
 ---
 
-## Prerequisites
+## Status
 
-- **Operating System:** Windows / macOS / Linux (tested on Windows 10+)
-- **Python version:** 3.12 (strictly recommended to ensure compatibility)
-- **Package manager:** Conda (recommended to maintain isolated environments and dependency control)
-- **Git:** For cloning the repository (optional if sharing files directly)
+This branch contains the earlier full backend + frontend integration of the Orbital Simulator project.
 
----
-
-## Tech Stack
-
-### Frontend
-- **HTML5** — Markup language for structuring web pages  
-- **CSS3** — Styling and layout of the web pages  
-- **JavaScript (vanilla)** — Client-side scripting for interactivity  
-
-### Backend
-- **Python 3.11** — Programming language  
-- **Flask** — Web framework for handling backend logic and routing  
-- **Jinja2** — Templating engine used by Flask for rendering HTML  
-- **python-dotenv** — Loads environment variables from a `.env` file  
-- **pip** — Python package manager for installing dependencies  
+**It is NOT recommended to use or deploy this version at this time.**
 
 ---
 
+## Future Plans
 
+- This branch will be the basis for the full-featured Orbital Simulator website.
+- Planned to be published on its own domain with complete backend functionality.
+- Will include advanced tools and server-side logic beyond the current static frontend.
+
+---
+
+## For Developers
+
+- Please continue active development on the main branch.
+- This branch will be merged or reactivated when backend deployment is ready.
+
+---
+
+Thank you for your understanding and patience!
