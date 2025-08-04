@@ -1,43 +1,28 @@
 # Orbital Simulator (ORS)
-**Alpha Release**
+### Alpha Release
 
-This project is a web-based orbital simulator built with Flask, allowing users to input parameters and calculate key orbital mechanics values such as specific orbital energy and orbital period.
-
----
+*This project is a web-based orbital simulator that runs entirely client-side in the browser. Users input parameters to calculate key orbital mechanics values such as specific orbital energy and orbital period — all calculations happen instantly with JavaScript.*
 
 ## Project Overview
+The Orbital Simulator (ORS) helps visualize and calculate orbital parameters based on classical physics formulas. It accepts inputs like mass, velocity, distance from the planetary center, and planetary mass to compute specific orbital energy, orbital period, and more.
 
-The Orbital Simulator (ORS) is designed to help visualize and calculate orbital parameters based on classical physics formulas. It supports* input of mass, velocity, distance from the planetary center, and the planetary mass to compute values like specific orbital energy and orbital period.
-
-This tool is primarily intended for educational use, simulation, and experimentation with orbital mechanics concepts.
-
-**note that it is heavily simplified as only just basic data is requested and outputted. we are still developing this website*
-
----
+*Note: This is a heavily simplified educational tool. Calculations and physics assumptions are basic and intended for learning and experimentation. The site is static and fully client-side — no server or backend required.*
 
 ## Prerequisites
+Any modern web browser (Chrome, Firefox, Edge, Safari, etc.)
 
-- **Operating System:** Windows / macOS / Linux (tested on Windows 10+)
-- **Python version:** 3.12 (strictly recommended to ensure compatibility)
-- **Package manager:** Conda (recommended to maintain isolated environments and dependency control)
-- **Git:** For cloning the repository (optional if sharing files directly)
-
----
+Internet connection to load the static site (optional if hosted locally)
 
 ## Tech Stack
+### Frontend Only
+HTML5 — Markup language for structure
 
-### Frontend
-- **HTML5** — Markup language for structuring web pages  
-- **CSS3** — Styling and layout of the web pages  
-- **JavaScript (vanilla)** — Client-side scripting for interactivity  
+CSS3 — Styling and layout
+
+JavaScript (vanilla) — Client-side logic and orbital calculations
 
 ### Backend
-- **Python 3.11** — Programming language  
-- **Flask** — Web framework for handling backend logic and routing  
-- **Jinja2** — Templating engine used by Flask for rendering HTML  
-- **python-dotenv** — Loads environment variables from a `.env` file  
-- **pip** — Python package manager for installing dependencies  
+None — the app is fully static and runs in the browser
 
----
-
-
+## NOTICE:
+**This website is currently in active development. This is the first build release. Future versions WILL include a backend, feature enhanced functionality, and offer additional advanced tools. Thank you for your patience and support as we continue improving the Orbital Simulator!**
