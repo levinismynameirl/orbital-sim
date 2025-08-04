@@ -1,23 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <title>Orbital Mechanics Simulator</title>
-    <link rel="stylesheet" href="static/style.css" />
+    <link rel="stylesheet" href="style.css">
+    <script defer src="orbitalCalc.js"></script>
 </head>
 <body>
     <h1>Orbital Mechanics Simulator</h1>
     <form id="orbit-form">
-        <label>Your Mass (kg): <input type="number" step="any" name="mass" required></label><br>
-        <label>Your Speed (m/s): <input type="number" step="any" name="speed" required></label><br>
-        <label>Distance from Center (m): <input type="number" step="any" name="distance" required></label><br>
-        <label>Planet Mass (kg): <input type="number" step="any" name="planet_mass" required></label><br>
+        <label>Your Mass (kg): <input type="number" step="any" id="mass" required></label><br>
+        <label>Your Speed (m/s): <input type="number" step="any" id="speed" required></label><br>
+        <label>Distance from Center (m): <input type="number" step="any" id="distance" required></label><br>
+        <label>Planet Mass (kg): <input type="number" step="any" id="planet_mass" required></label><br>
         <button type="submit">Calculate</button>
     </form>
 
-    <div id="results" style="margin-top: 20px;"></div>
-
-    <script src="static/script.js"></script>
-    <script src="orbitalCalc.js"></script>
+    <div id="results"></div>
 </body>
 </html>
