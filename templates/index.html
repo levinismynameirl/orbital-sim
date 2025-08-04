@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Orbital Mechanics Simulator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Orbital Mechanics Simulator</h1>
+    <form method="post">
+        <label>Your Mass (kg): <input type="number" step="any" name="mass" required></label><br>
+        <label>Your Speed (m/s): <input type="number" step="any" name="speed" required></label><br>
+        <label>Distance from Center (m): <input type="number" step="any" name="distance" required></label><br>
+        <label>Planet Mass (kg): <input type="number" step="any" name="planet_mass" required></label><br>
+        <button type="submit">Calculate</button>
+    </form>
+    {% if result %}
+        <h2>Results</h2>
+        {% if result.error %}
+            <p style="color:red;">Error: {{ result.error }}</p>
+        {% else %}
+            <p>Specific Orbital Energy: {{ result.energy | round(3) }} J/kg</p>
+            <p>Orbital Period: 
+                {% if result.period %}
+                    {{ result.period | round(3) }} s
+                {% else %}
+                    N/A
+                {% endif %}
+            </p>
+            <p>Standard Gravitational Parameter (&mu;): {{ result.mu | round(3) }}</p>
+        {% endif %}
+    {% endif %}
+</body>
+</html>
