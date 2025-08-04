@@ -1,80 +1,116 @@
-// static/script.js
-import {
-  specificOrbitalEnergy,
-  orbitalPeriod,
-  standardGravitationalParameter,
-  eccentricity,
-  escapeVelocity,
-  deltaVRequired,
-  checkEscapeVelocity,
-} from './calculations.js';
+// DOM ELEMENTS
+const form = document.getElementById("orbit-form");
+const calculateBtn = document.getElementById("calculateBtn");
+const clearBtn = document.getElementById("clearBtn");
+const advancedToggleBtn = document.getElementById("advancedToggleBtn");
+const advancedSection = document.getElementById("advancedSection");
+const outputAdvanced = document.getElementById("outputAdvanced");
+const loading = document.getElementById("loading");
 
-const advancedToggle = document.getElementById('advancedToggle');
-const advancedSection = document.getElementById('advancedSection');
-const outputAdvanced = document.getElementById('outputAdvanced');
+// OUTPUT FIELDS
+const energyOutput = document.getElementById("energyOutput");
+const periodOutput = document.getElementById("periodOutput");
+const muOutput = document.getElementById("muOutput");
+const eccentricityOutput = document.getElementById("eccentricity");
+const escapeVelocityOutput = document.getElementById("escapeVelocity");
+const escapeCheckOutput = document.getElementById("escapeCheck");
+const deltaVRequiredOutput = document.getElementById("deltaVRequired");
 
-advancedToggle.addEventListener('change', (e) => {
-  if (e.target.checked) {
-    advancedSection.style.display = 'block';
-    outputAdvanced.style.display = 'block';
-  } else {
-    advancedSection.style.display = 'none';
-    outputAdvanced.style.display = 'none';
-  }
+// INPUT FIELDS
+const massInput = document.getElementById("mass");
+const velocityInput = document.getElementById("velocity");
+const distanceInput = document.getElementById("distance");
+const planetMassInput = document.getElementById("planet_mass");
+const apoapsisInput = document.getElementById("apoapsis");
+const periapsisInput = document.getElementById("periapsis");
+const deltaVInput = document.getElementById("deltaV");
+
+let advancedVisible = false;
+
+// TOGGLE ADVANCED SECTION
+advancedToggleBtn.addEventListener("click", () => {
+  advancedVisible = !advancedVisible;
+  advancedSection.style.display = advancedVisible ? "block" : "none";
+  outputAdvanced.style.display = "none";
+  advancedToggleBtn.textContent = advancedVisible
+    ? "Hide Advanced Parameters"
+    : "Show Advanced Parameters";
 });
 
-function updateOutputs() {
-  const massPlanet = parseFloat(document.getElementById('planet_mass').value);
-  const r = parseFloat(document.getElementById('distance').value);
-  const v = parseFloat(document.getElementById('velocity').value);
+// CLEAR ALL FIELDS
+clearBtn.addEventListener("click", () => {
+  form.reset();
+  energyOutput.textContent = "-";
+  periodOutput.textContent = "-";
+  muOutput.textContent = "-";
+  eccentricityOutput.textContent = "-";
+  escapeVelocityOutput.textContent = "-";
+  escapeCheckOutput.textContent = "-";
+  deltaVRequiredOutput.textContent = "-";
+  outputAdvanced.style.display = "none";
+});
 
-  // Advanced inputs (optional)
-  const apoapsisInput = document.getElementById('apoapsis').value;
-  const periapsisInput = document.getElementById('periapsis').value;
-  const deltaVInputVal = document.getElementById('deltaV').value;
+// HANDLE FORM SUBMISSION
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
 
-  const apoapsis = apoapsisInput === '' ? null : parseFloat(apoapsisInput);
-  const periapsis = periapsisInput === '' ? null : parseFloat(periapsisInput);
-  const deltaVInput = deltaVInputVal === '' ? null : parseFloat(deltaVInputVal);
+  // Show loading animation
+  loading.style.display = "block";
+  calculateBtn.disabled = true;
 
-  if (isNaN(massPlanet) || isNaN(r) || isNaN(v)) {
-    alert('Please fill in planet mass, distance, and velocity');
+  setTimeout(() => {
+    calculateOrbit();
+    loading.style.display = "none";
+    calculateBtn.disabled = false;
+  }, 800); // Simulate calculation time
+});
+
+// MAIN CALCULATION FUNCTION
+function calculateOrbit() {
+  const m = parseFloat(massInput.value);
+  const v = parseFloat(velocityInput.value);
+  const r = parseFloat(distanceInput.value);
+  const M = parseFloat(planetMassInput.value);
+
+  if (isNaN(m) || isNaN(v) || isNaN(r) || isNaN(M)) {
+    alert("Please enter valid numbers for all required fields.");
     return;
   }
 
-  // Basic calculations
-  const energy = specificOrbitalEnergy(v, r, massPlanet);
-  const period = orbitalPeriod(r, massPlanet);
-  const mu = standardGravitationalParameter(massPlanet);
+  const G = 6.67430e-11;
+  const mu = G * M;
+  const specificEnergy = (0.5 * v * v) - (mu / r);
+  const period = 2 * Math.PI * Math.sqrt(Math.pow(r, 3) / mu);
+  const escapeVelocity = Math.sqrt(2 * mu / r);
+  const isEscape = v >= escapeVelocity;
 
-  document.getElementById('energyOutput').textContent = energy.toFixed(3);
-  document.getElementById('periodOutput').textContent = period.toFixed(3);
-  document.getElementById('muOutput').textContent = mu.toExponential(3);
+  energyOutput.textContent = specificEnergy.toExponential(3);
+  periodOutput.textContent = isNaN(period) ? "-" : period.toFixed(2);
+  muOutput.textContent = mu.toExponential(3);
 
-  // Advanced calculations if toggle enabled
-  if (advancedToggle.checked) {
-    let ecc = (apoapsis !== null && periapsis !== null) ? eccentricity(apoapsis, periapsis) : null;
-    if (ecc === null || isNaN(ecc)) ecc = 'N/A';
-    else ecc = ecc.toFixed(5);
+  if (advancedVisible) {
+    // Advanced calculations
+    const apoapsis = parseFloat(apoapsisInput.value);
+    const periapsis = parseFloat(periapsisInput.value);
+    const deltaV = parseFloat(deltaVInput.value);
 
-    const vEscape = escapeVelocity(r, massPlanet).toFixed(2);
-    const isEscaping = checkEscapeVelocity(v, r, massPlanet);
-    const escapeMsg = isEscaping ? 'Yes, speed exceeds escape velocity!' : 'No, orbit is bound.';
-
-    let deltaVReq = null;
-    if (deltaVInput !== null) {
-      deltaVReq = deltaVRequired(v, deltaVInput);
+    // Eccentricity (if inputs are valid)
+    let eccentricity = "-";
+    if (!isNaN(apoapsis) && !isNaN(periapsis)) {
+      eccentricity = ((apoapsis - periapsis) / (apoapsis + periapsis)).toFixed(3);
     }
-    deltaVReq = (deltaVReq !== null && !isNaN(deltaVReq)) ? deltaVReq.toFixed(2) : 'N/A';
 
-    document.getElementById('eccentricity').textContent = ecc;
-    document.getElementById('escapeVelocity').textContent = vEscape;
-    document.getElementById('escapeCheck').textContent = escapeMsg;
-    document.getElementById('deltaVRequired').textContent = deltaVReq;
+    // Estimated delta-v (placeholder formula)
+    let deltaVRequired = "-";
+    if (!isNaN(deltaV)) {
+      deltaVRequired = deltaV.toFixed(2);
+    }
+
+    eccentricityOutput.textContent = eccentricity;
+    escapeVelocityOutput.textContent = escapeVelocity.toFixed(2);
+    escapeCheckOutput.textContent = isEscape ? "Yes" : "No";
+    deltaVRequiredOutput.textContent = deltaVRequired;
+
+    outputAdvanced.style.display = "block";
   }
 }
-
-document.getElementById('orbit-form').addEventListener('submit', (e) => {
-  e.preventDefault();
-  updateOutputs();
-});

@@ -1,66 +1,112 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <title>Orbital Mechanics Simulator</title>
-    <link rel="stylesheet" href="static/style.css" />
-    <link rel="stylesheet" href="static/tooltips.css" />
-    <script type="module" src="static/script.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Orbital Mechanics Simulator</title>
+  <link rel="stylesheet" href="static/style.css" />
+  <link rel="stylesheet" href="static/tooltips.css" />
+  <script type="module" src="static/script.js" defer></script>
 </head>
 <body>
+  <div class="container">
     <h1>Orbital Mechanics Simulator</h1>
+
     <form id="orbit-form">
-        <label>Your Mass (kg): <input type="number" step="any" id="mass" required></label><br>
-        <label>Your Speed (m/s): <input type="number" step="any" id="velocity" required></label><br>
-        <label>Distance from Center (m): <input type="number" step="any" id="distance" required></label><br>
-        <label>Planet Mass (kg): <input type="number" step="any" id="planet_mass" required></label><br>
+      <!-- BASIC INPUTS -->
+      <div class="input-group">
+        <label>
+          Your Mass (kg)
+          <span class="tooltip" data-tooltip="The mass of your spacecraft or object in kilograms.">?</span>
+        </label>
+        <input type="number" step="any" id="mass" required />
+      </div>
+
+      <div class="input-group">
+        <label>
+          Your Speed (m/s)
+          <span class="tooltip" data-tooltip="The current velocity of your spacecraft relative to the planet.">?</span>
+        </label>
+        <input type="number" step="any" id="velocity" required />
+      </div>
+
+      <div class="input-group">
+        <label>
+          Distance from Planet Center (m)
+          <span class="tooltip" data-tooltip="The distance from the planet's center, not the surface.">?</span>
+        </label>
+        <input type="number" step="any" id="distance" required />
+      </div>
+
+      <div class="input-group">
+        <label>
+          Planet Mass (kg)
+          <span class="tooltip" data-tooltip="Mass of the celestial body being orbited.">?</span>
+        </label>
+        <input type="number" step="any" id="planet_mass" required />
+      </div>
+
+      <!-- ADVANCED TOGGLE -->
+      <button type="button" id="advancedToggleBtn" class="advanced-button">
+        Show Advanced Parameters
+      </button>
+
+      <!-- ADVANCED INPUTS -->
+      <div id="advancedSection" style="display:none;">
+        <div class="input-group">
+          <label>
+            Apoapsis (m)
+            <span class="tooltip" data-tooltip="The farthest point in your orbit from the planet's center.">?</span>
+          </label>
+          <input type="number" id="apoapsis" placeholder="Optional" />
+        </div>
+
+        <div class="input-group">
+          <label>
+            Periapsis (m)
+            <span class="tooltip" data-tooltip="The closest point in your orbit from the planet's center.">?</span>
+          </label>
+          <input type="number" id="periapsis" placeholder="Optional" />
+        </div>
+
+        <div class="input-group">
+          <label>
+            Desired Δv (m/s)
+            <span class="tooltip" data-tooltip="Approximate change in velocity needed to reach your target orbit.">?</span>
+          </label>
+          <input type="number" id="deltaV" placeholder="Optional" />
+        </div>
+      </div>
+
+      <!-- BUTTONS -->
+      <div class="button-group">
         <button type="submit" id="calculateBtn">Calculate</button>
+        <button type="button" id="clearBtn">Clear Fields</button>
+      </div>
     </form>
 
-    <!-- Basic Results -->
-    <div id="results" style="margin-top:1em;">
+    <!-- LOADING ANIMATION -->
+    <div id="loading" style="display:none;">
+      <div class="spinner"></div>
+      <p>Calculating, please wait...</p>
+    </div>
+
+    <!-- BASIC RESULTS -->
+    <div id="results" class="output">
+      <h2>Results</h2>
       <p>Specific Orbital Energy: <span id="energyOutput">-</span></p>
       <p>Orbital Period (s): <span id="periodOutput">-</span></p>
       <p>Standard Gravitational Parameter (μ): <span id="muOutput">-</span></p>
     </div>
 
-    <!-- Advanced Mode Toggle -->
-    <label>
-      <input type="checkbox" id="advancedToggle" />
-      Show Advanced Orbital Parameters
-    </label>
-
-    <div id="advancedSection" style="display:none; margin-top: 1em;">
-      <div class="input-group">
-        <label>
-          Apoapsis (m)
-          <span class="tooltip" data-tooltip="Farthest point in orbit from planet center">?</span>
-        </label>
-        <input type="number" id="apoapsis" placeholder="Optional" />
-      </div>
-
-      <div class="input-group">
-        <label>
-          Periapsis (m)
-          <span class="tooltip" data-tooltip="Closest point in orbit from planet center">?</span>
-        </label>
-        <input type="number" id="periapsis" placeholder="Optional" />
-      </div>
-
-      <div class="input-group">
-        <label>
-          Desired Delta-v (m/s)
-          <span class="tooltip" data-tooltip="Approximate velocity change needed to reach target orbit">?</span>
-        </label>
-        <input type="number" id="deltaV" placeholder="Optional" />
-      </div>
-    </div>
-
-    <div id="outputAdvanced" style="margin-top: 1em; display:none;">
+    <!-- ADVANCED RESULTS -->
+    <div id="outputAdvanced" class="output" style="display:none;">
+      <h2>Advanced Results</h2>
       <p>Eccentricity: <span id="eccentricity">-</span></p>
       <p>Escape Velocity: <span id="escapeVelocity">-</span> m/s</p>
       <p>Orbit Escape Check: <span id="escapeCheck">-</span></p>
-      <p>Estimated Delta-v Required: <span id="deltaVRequired">-</span> m/s</p>
+      <p>Estimated Δv Required: <span id="deltaVRequired">-</span> m/s</p>
     </div>
+  </div>
 </body>
 </html>
