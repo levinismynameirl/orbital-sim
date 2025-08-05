@@ -1,5 +1,5 @@
-// Import the guided tour if present
-import './tour.js';
+// Import the guided tour (if implemented)
+import { startTutorial } from './tour.js';
 
 const G = 6.67430e-11; // gravitational constant
 
@@ -26,7 +26,10 @@ const advancedToggleBtn = document.getElementById('advancedToggleBtn');
 const advancedSection = document.getElementById('advancedSection');
 const clearBtn = document.getElementById('clearBtn');
 const presetSelect = document.getElementById('presetBodies');
-const massInput = document.getElementById('mass');
+// Renamed massInput to planetMassInput
+const planetMassInput = document.getElementById('mass');
+const velocityInput = document.getElementById('velocity');
+const distanceInput = document.getElementById('distance');
 
 // Results outputs
 const energyOutput = document.getElementById('energyOutput');
@@ -37,15 +40,20 @@ const escapeVelocityOutput = document.getElementById('escapeVelocity');
 const escapeCheckOutput = document.getElementById('escapeCheck');
 const deltaVRequiredOutput = document.getElementById('deltaVRequired');
 
-// Handle preset body selection
+// Start tutorial on page load
+window.addEventListener('load', () => {
+  if (typeof startTutorial === 'function') startTutorial();
+});
+
+// Handle preset body selection (fills planet mass)
 presetSelect.addEventListener('change', () => {
   const selected = presetSelect.value;
   if (presets[selected]) {
-    massInput.value = presets[selected];
-    massInput.disabled = true;
+    planetMassInput.value = presets[selected];
+    planetMassInput.disabled = true;
   } else {
-    massInput.value = '';
-    massInput.disabled = false;
+    planetMassInput.value = '';
+    planetMassInput.disabled = false;
   }
 });
 
@@ -55,6 +63,7 @@ advancedToggleBtn.addEventListener('click', () => {
   advancedSection.style.display = isVisible ? 'none' : 'block';
   advancedToggleBtn.textContent = isVisible ? 'Show Advanced Parameters' : 'Hide Advanced Parameters';
 
+  // Show advanced results if results are visible
   advancedDiv.style.display = !isVisible && resultsDiv.style.display === 'block' ? 'block' : 'none';
 });
 
@@ -64,10 +73,10 @@ clearBtn.addEventListener('click', () => {
   resultsDiv.style.display = 'none';
   advancedDiv.style.display = 'none';
   loadingDiv.style.display = 'none';
-  massInput.disabled = false;
+  planetMassInput.disabled = false;
 });
 
-// Form submission handler
+// Handle form submit
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   loadingDiv.style.display = 'block';
@@ -82,19 +91,22 @@ form.addEventListener('submit', (e) => {
 
 // Main orbit calculation
 function calculateOrbit() {
-  const mass = parseFloat(document.getElementById('mass').value);
-  const velocity = parseFloat(document.getElementById('velocity').value);
-  const distance = parseFloat(document.getElementById('distance').value);
-  const planetMass = parseFloat(massInput.value);
+  const yourMass = parseFloat(planetMassInput.value);
+  const velocity = parseFloat(velocityInput.value);
+  const distance = parseFloat(distanceInput.value);
 
-  if (isNaN(mass) || isNaN(velocity) || isNaN(distance) || isNaN(planetMass) || mass <= 0 || distance <= 0 || planetMass <= 0) {
-    alert('Please enter valid positive numbers for all required fields.');
+  if (isNaN(yourMass) || isNaN(velocity) || isNaN(distance) || yourMass <= 0 || distance <= 0) {
+    alert('Please enter valid positive numbers for planet mass, speed, and distance.');
     return;
   }
 
-  const mu = G * planetMass;
-  const specificOrbitalEnergy = velocity ** 2 / 2 - mu / distance;
+  // Gravitational parameter μ = G * M
+  const mu = G * yourMass;
 
+  // Specific orbital energy ε = v²/2 − μ/r
+  const specificOrbitalEnergy = velocity * velocity / 2 - mu / distance;
+
+  // Orbital period for bound orbits
   let orbitalPeriod = '-';
   let semiMajorAxis = null;
   if (specificOrbitalEnergy < 0) {
@@ -102,11 +114,13 @@ function calculateOrbit() {
     orbitalPeriod = (2 * Math.PI * Math.sqrt(semiMajorAxis ** 3 / mu)).toFixed(2);
   }
 
+  // Display basic results
   energyOutput.textContent = specificOrbitalEnergy.toExponential(4);
   periodOutput.textContent = orbitalPeriod;
   muOutput.textContent = mu.toExponential(4);
   resultsDiv.style.display = 'block';
 
+  // Advanced calculations
   if (advancedSection.style.display === 'block') {
     calculateAdvancedResults(mu, velocity, distance, semiMajorAxis, specificOrbitalEnergy);
   } else {
@@ -116,26 +130,32 @@ function calculateOrbit() {
 
 // Advanced orbit calculations
 function calculateAdvancedResults(mu, velocity, distance, semiMajorAxis, specificOrbitalEnergy) {
-  const apoapsisInput = parseFloat(document.getElementById('apoapsis').value);
-  const periapsisInput = parseFloat(document.getElementById('periapsis').value);
+  const apoapsis = parseFloat(document.getElementById('apoapsis').value);
+  const periapsis = parseFloat(document.getElementById('periapsis').value);
   const deltaVInput = parseFloat(document.getElementById('deltaV').value);
 
-  let eccentricity = 0;
-  if (!isNaN(apoapsisInput) && !isNaN(periapsisInput) && apoapsisInput > periapsisInput && periapsisInput > 0) {
-    eccentricity = (apoapsisInput - periapsisInput) / (apoapsisInput + periapsisInput);
+  // Eccentricity
+  let e = 0;
+  if (!isNaN(apoapsis) && !isNaN(periapsis) && apoapsis > periapsis && periapsis > 0) {
+    e = (apoapsis - periapsis) / (apoapsis + periapsis);
   }
-  eccentricityOutput.textContent = eccentricity.toFixed(4);
+  eccentricityOutput.textContent = e.toFixed(4);
 
-  const escapeVelocity = Math.sqrt((2 * mu) / distance);
-  escapeVelocityOutput.textContent = escapeVelocity.toFixed(2);
+  // Escape velocity vₑ = √(2μ/r)
+  const vEscape = Math.sqrt(2 * mu / distance);
+  escapeVelocityOutput.textContent = vEscape.toFixed(2);
 
-  const isEscape = velocity >= escapeVelocity;
-  escapeCheckOutput.textContent = isEscape ? 'Yes, you are escaping orbit.' : 'No, you are bound to orbit.';
+  // Escape check
+  const isEscape = velocity >= vEscape;
+  escapeCheckOutput.textContent = isEscape
+    ? 'Yes, you are escaping orbit.'
+    : 'No, you are bound to orbit.';
 
-  const circularVelocity = Math.sqrt(mu / distance);
-  let deltaVRequired = Math.abs(circularVelocity - velocity);
-  if (!isNaN(deltaVInput)) deltaVRequired = deltaVInput;
-  deltaVRequiredOutput.textContent = deltaVRequired.toFixed(2);
+  // Delta-v required (difference to circular velocity)
+  const vCircular = Math.sqrt(mu / distance);
+  let deltaV = Math.abs(vCircular - velocity);
+  if (!isNaN(deltaVInput)) deltaV = deltaVInput;
+  deltaVRequiredOutput.textContent = deltaV.toFixed(2);
 
   advancedDiv.style.display = 'block';
 }
