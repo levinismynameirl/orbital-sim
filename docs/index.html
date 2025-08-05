@@ -12,64 +12,62 @@
   <div class="container">
     <h1>Orbital Mechanics Simulator</h1>
 
+    <!-- Tutorial Overlay -->
+    <div id="tutorialOverlay" class="overlay">
+      <div class="tutorial-step" data-step="1">
+        <h2>Welcome!</h2>
+        <p>This interactive guide will show you around the Orbital Mechanics Simulator.</p>
+        <button id="skipTutorial">Skip Tutorial</button>
+        <button id="nextStep">Next</button>
+      </div>
+    </div>
+
     <form id="orbit-form" autocomplete="off">
+      <!-- CELESTIAL BODY PRESETS -->
+      <div class="input-group">
+        <label for="presetBodies">
+          Celestial Body Presets
+          <span class="tooltip" data-tooltip="Assumes no atmosphere and treats the planet as a point mass. Use Custom for manual entry.">!</span>
+        </label>
+        <select id="presetBodies">
+          <option value="">Custom</option>
+          <option value="earth">Earth</option>
+          <option value="moon">Moon</option>
+          <option value="mars">Mars</option>
+          <option value="jupiter">Jupiter</option>
+          <option value="venus">Venus</option>
+          <option value="saturn">Saturn</option>
+          <option value="mercury">Mercury</option>
+          <option value="neptune">Neptune</option>
+          <option value="uranus">Uranus</option>
+          <option value="sun">Sun</option>
+        </select>
+      </div>
+
       <!-- BASIC INPUTS -->
       <div class="input-group">
-        <label>
+        <label for="mass">
           Your Mass (kg)
-          <span class="tooltip" data-tooltip="The mass of your spacecraft or object in kilograms.">?</span>
+          <span class="tooltip" data-tooltip="Mass of the spacecraft or object in kilograms.">?</span>
         </label>
         <input type="number" step="any" id="mass" required />
       </div>
 
       <div class="input-group">
-        <label>
+        <label for="velocity">
           Your Speed (m/s)
-          <span class="tooltip" data-tooltip="The current velocity of your spacecraft relative to the planet.">?</span>
+          <span class="tooltip" data-tooltip="Velocity relative to the planet's center.">?</span>
         </label>
         <input type="number" step="any" id="velocity" required />
       </div>
 
       <div class="input-group">
-        <label>
+        <label for="distance">
           Distance from Planet Center (m)
-          <span class="tooltip" data-tooltip="The distance from the planet's center, not the surface.">?</span>
+          <span class="tooltip" data-tooltip="Distance from the planet's center to your spacecraft.">?</span>
         </label>
         <input type="number" step="any" id="distance" required />
       </div>
-
-<!-- CELESTIAL BODY PRESETS -->
-<div class="input-group">
-  <label for="presetBodies">
-    Celestial Body Presets
-    <span class="tooltip" data-tooltip="Assumes no atmosphere and treats the planet as a point mass. Calculations still work even if you input values below the surface.">!</span>
-  </label>
-  <select id="presetBodies">
-    <option value="">Custom</option>
-    <option value="earth">Earth</option>
-    <option value="mars">Mars</option>
-    <option value="jupiter">Jupiter</option>
-    <option value="venus">Venus</option>
-    <option value="saturn">Saturn</option>
-    <option value="mercury">Mercury</option>
-    <option value="neptune">Neptune</option>
-    <option value="uranus">Uranus</option>
-    <option value="moon">Moon</option>
-    <option value="sun">Sun</option>
-  </select>
-</div>
-
-<!-- Mass input -->
-<div class="input-group">
-  <label for="mass">Mass (kg):</label>
-  <input type="number" id="mass" placeholder="Enter mass or select a body">
-</div>
-
-<!-- Radius input -->
-<div class="input-group">
-  <label for="radius">Radius (m):</label>
-  <input type="number" id="radius" placeholder="Enter radius or select a body">
-</div>
 
       <!-- ADVANCED TOGGLE -->
       <button type="button" id="advancedToggleBtn" class="advanced-button">
@@ -79,25 +77,23 @@
       <!-- ADVANCED INPUTS -->
       <div id="advancedSection" style="display:none;">
         <div class="input-group">
-          <label>
+          <label for="apoapsis">
             Apoapsis (m)
-            <span class="tooltip" data-tooltip="The farthest point in your orbit from the planet's center.">?</span>
+            <span class="tooltip" data-tooltip="Farthest point in your orbit.">?</span>
           </label>
           <input type="number" id="apoapsis" placeholder="Optional" />
         </div>
-
         <div class="input-group">
-          <label>
+          <label for="periapsis">
             Periapsis (m)
-            <span class="tooltip" data-tooltip="The closest point in your orbit from the planet's center.">?</span>
+            <span class="tooltip" data-tooltip="Closest point in your orbit.">?</span>
           </label>
           <input type="number" id="periapsis" placeholder="Optional" />
         </div>
-
         <div class="input-group">
-          <label>
+          <label for="deltaV">
             Desired Δv (m/s)
-            <span class="tooltip" data-tooltip="Approximate change in velocity needed to reach your target orbit.">?</span>
+            <span class="tooltip" data-tooltip="Velocity change needed for transfer.">?</span>
           </label>
           <input type="number" id="deltaV" placeholder="Optional" />
         </div>
