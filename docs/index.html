@@ -38,13 +38,38 @@
         <input type="number" step="any" id="distance" required />
       </div>
 
-      <div class="input-group">
-        <label>
-          Planet Mass (kg)
-          <span class="tooltip" data-tooltip="Mass of the celestial body being orbited.">?</span>
-        </label>
-        <input type="number" step="any" id="planet_mass" required />
-      </div>
+<!-- CELESTIAL BODY PRESETS -->
+<div class="input-group">
+  <label for="presetBodies">
+    Celestial Body Presets
+    <span class="tooltip" data-tooltip="Assumes no atmosphere and treats the planet as a point mass. Calculations still work even if you input values below the surface.">!</span>
+  </label>
+  <select id="presetBodies">
+    <option value="">Custom</option>
+    <option value="earth">Earth</option>
+    <option value="mars">Mars</option>
+    <option value="jupiter">Jupiter</option>
+    <option value="venus">Venus</option>
+    <option value="saturn">Saturn</option>
+    <option value="mercury">Mercury</option>
+    <option value="neptune">Neptune</option>
+    <option value="uranus">Uranus</option>
+    <option value="moon">Moon</option>
+    <option value="sun">Sun</option>
+  </select>
+</div>
+
+<!-- Mass input -->
+<div class="input-group">
+  <label for="mass">Mass (kg):</label>
+  <input type="number" id="mass" placeholder="Enter mass or select a body">
+</div>
+
+<!-- Radius input -->
+<div class="input-group">
+  <label for="radius">Radius (m):</label>
+  <input type="number" id="radius" placeholder="Enter radius or select a body">
+</div>
 
       <!-- ADVANCED TOGGLE -->
       <button type="button" id="advancedToggleBtn" class="advanced-button">
