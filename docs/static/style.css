@@ -122,3 +122,92 @@ button:focus {
     transform: rotate(360deg);
   }
 }
+
+/* Documentation page styling */
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f9f9fb;
+  color: #2c3e50;
+  line-height: 1.6;
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+header {
+  border-bottom: 2px solid #3498db;
+  margin-bottom: 30px;
+  padding-bottom: 10px;
+}
+
+header h1 {
+  font-size: 2.8rem;
+  color: #2980b9;
+  margin-bottom: 5px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #3498db;
+  font-weight: 600;
+  padding: 8px 15px;
+  border: 2px solid #3498db;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+nav a:hover {
+  background-color: #3498db;
+  color: #fff;
+}
+
+main section {
+  margin-bottom: 35px;
+}
+
+main section h2 {
+  font-size: 1.8rem;
+  color: #34495e;
+  margin-bottom: 12px;
+  border-bottom: 2px solid #2980b9;
+  padding-bottom: 6px;
+}
+
+main section p,
+main section ul {
+  font-size: 1.1rem;
+  color: #3b4a63;
+}
+
+main section ul {
+  padding-left: 20px;
+}
+
+main section ul li {
+  margin-bottom: 8px;
+}
+
+code {
+  background-color: #e1ecf4;
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1rem;
+  color: #2c3e50;
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 15px 10px;
+    font-size: 16px;
+  }
+
+  header h1 {
+    font-size: 2rem;
+  }
+
+  main section h2 {
+    font-size: 1.4rem;
+  }
+}

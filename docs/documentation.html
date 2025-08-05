@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Orbit Calculator Documentation</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Orbit Calculator Documentation</h1>
+    <nav>
+      <a href="index.html">Back to Calculator</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Introduction</h2>
+      <p>
+        This Orbit Calculator helps you understand and predict orbital mechanics for an object orbiting a planet or celestial body.
+        It uses classical Newtonian gravity to calculate essential orbital parameters based on inputs like mass, velocity, and distance.
+        If you do not understand the terms used, please go to the bottom of the page to read the glossary.
+        </p>
+        (Note that this is a simplified model and does not account for atmospheric drag, relativistic effects, or perturbations from other celestial bodies and therefore should not be used for real-world mission planning. This tool is designed for simulation and educational purposes.)
+      </p>
+      <p>
+        Understanding orbits is critical in astrophysics, space missions, and satellite deployment. This tool simplifies complex equations into easy-to-understand outputs. And it provides a hands-on way to explore how changing parameters affects an orbit.
+      </p>
+    </section>
+
+    <section>
+      <h2>Key Concepts in Orbital Mechanics</h2>
+      <ul>
+        <li><strong>Gravitational Constant (G):</strong> A universal constant <code>6.67430 × 10⁻¹¹ m³ kg⁻¹ s⁻²</code> that quantifies the strength of gravity. It is used in the calculation of gravitational forces between two masses where <code>F = G(m₁m₂/r²)</code>.</li>
+        <li><strong>Gravitational Parameter (μ):</strong> The product of G and the central body’s mass <code>μ = GM</code>. It simplifies orbit equations and <em>is often used instead of G and M separately.</em></li>
+        <li><strong>Specific Orbital Energy:</strong> The total energy (kinetic + potential) per unit mass in orbit. Determines orbit type:
+          <ul>
+            <li><em>Negative energy:</em> Bound elliptical or circular orbit. This means the object is gravitationally bound to the central body and will not escape its influence.</li>
+            <li><em>Zero energy:</em> Parabolic trajectory (escape orbit). This means the object has just enough energy to escape the gravitational pull of the central body.</li>
+            <li><em>Positive energy:</em> Hyperbolic trajectory (escaping orbit). This means the object has more than enough energy to escape the gravitational pull of the central body.</li>
+          </ul>
+        </li>
+        <li><strong>Orbital Period:</strong> Time taken for one full orbit, only defined for bound orbits. This is calculated using the formula <code>T = 2π√(a³/μ)</code>, where <code>a</code> is the semi-major axis of the orbit.</li>
+        <li><strong>Eccentricity:</strong> Measures orbit shape. It ranges from 0 (circular) to 1 (parabolic) and greater than 1 (hyperbolic). The eccentricity is calculated using the formula <code>e = (r_a - r_p) / (r_a + r_p)</code>, where <code>r_a</code> is apoapsis and <code>r_p</code> is periapsis. Bound eccentricity can be anywhere from 0 to 0.999... </li>
+          <ul>
+            <li>0 = perfect circle</li>
+            <li>Between 0 and 1 = ellipse</li>
+            <li>1 = parabola (escape)</li>
+            <li>Greater than 1 = hyperbola</li>
+          </ul>
+        </li>
+        <li><strong>Escape Velocity:</strong> The minimum speed needed to break free from a planet’s gravitational pull at a given distance.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Input Parameters Explained</h2>
+      <ul>
+        <li><strong>Mass (kg):</strong> Mass of the orbiting object (e.g., satellite, spacecraft). Although it doesn’t affect orbit shape, it matters for energy calculations.</li>
+        <li><strong>Velocity (m/s):</strong> Speed of the object relative to the central body at the given distance.</li>
+        <li><strong>Distance (m):</strong> Radial distance from the center of the planet/body to the object (orbital radius).</li>
+        <li><strong>Planet Mass (kg):</strong> Mass of the central celestial body around which the object orbits.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Output Parameters Explained</h2>
+      <ul>
+        <li><strong>Specific Orbital Energy (J/kg):</strong> Calculated as kinetic energy minus gravitational potential energy per unit mass:
+          <br /><code>ε = v²/2 - μ / r</code></li>
+        <li><strong>Orbital Period (s):</strong> Time for a complete orbit, calculated only if energy indicates a bound orbit (elliptical/circular):
+          <br /><code>T = 2π √(a³ / μ)</code>, where <code>a</code> is semi-major axis.</li>
+        <li><strong>Gravitational Parameter (μ) (m³/s²):</strong> Simplifies orbital equations: <code>μ = G * M</code></li>
+        <li><strong>Eccentricity (unitless):</strong> Shape descriptor of the orbit, calculated if apoapsis and periapsis are provided.</li>
+        <li><strong>Escape Velocity (m/s):</strong> Minimum velocity to escape gravity at current distance:
+          <br /><code>v_escape = √(2 * μ / r)</code></li>
+        <li><strong>Delta-V Required (m/s):</strong> Velocity change needed to reach a circular orbit from current velocity, or user-supplied input.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>How the Calculations Work</h2>
+      <p>
+        The calculator uses Newton’s law of universal gravitation and classical mechanics:
+      </p>
+      <ul>
+        <li><strong>Gravitational Force:</strong> <code>F = G * (m * M) / r²</code></li>
+        <li><strong>Gravitational Parameter:</strong> <code>μ = G * M</code> combines gravitational constant and planet mass for convenience. It simplifies many orbital equations.</li>
+        <li><strong>Specific Orbital Energy:</strong> The balance of kinetic and potential energy determines orbit shape and stability. What it means is that the specific orbital energy is the total energy per unit mass of the orbiting object.
+          <br />Kinetic energy per mass: <code>v² / 2</code>
+          <br />Potential energy per mass: <code>- μ / r</code>
+          <br />Energy formula: <code>ε = v²/2 - μ / r</code></li>
+        <li><strong>Semi-major axis (a):</strong> For bound orbits, <code>a = - μ / (2ε)</code></li>
+        <li><strong>Orbital Period:</strong> If orbit is elliptical/circular, the period is:
+          <br /><code>T = 2π * sqrt(a³ / μ)</code></li>
+        <li><strong>Eccentricity:</strong> Calculated from apoapsis (<code>r_a</code>) and periapsis (<code>r_p</code>):
+          <br /><code>e = (r_a - r_p) / (r_a + r_p)</code></li>
+        <li><strong>Escape Velocity:</strong> Velocity to escape gravitational influence at radius <code>r</code>:
+          <br /><code>v_escape = sqrt(2 * μ / r)</code></li>
+        <li><strong>Delta-V Required:</strong> Difference between current velocity and circular orbital velocity (<code>v_c = sqrt(μ / r)</code>).</li>
+      </ul>
+      <p>
+        These formulas assume point masses and neglect atmospheric drag, relativistic effects, and non-spherical planetary shape. 
+      </p>
+    </section>
+
+    <section>
+      <h2>Example Calculations (you can try these on your own as well!)</h2>
+      <h3>Example 1: Low Earth Orbit Satellite</h3>
+      <ul>
+        <li>This example demonstrates the calculations for a satellite in low Earth orbit. Assuming it's above the Karman line and no atmospheric drag is acting on it which is not realistic but simplifies the calculations for academic purposes.</li>
+        <li>Mass: 1000 kg</li>
+        <li>Velocity: 7800 m/s (approximate ISS orbital velocity)</li>
+        <li>Distance: 6,771,000 m (Earth radius + ~400 km altitude)</li>
+        <li>Planet Mass: 5.972 × 10²⁴ kg (Earth)</li>
+      </ul>
+      <p><strong>Calculations:</strong></p>
+      <ul>
+        <li>Gravitational parameter: <code>μ = 6.67430e-11 × 5.972e24 ≈ 3.986e14 m³/s²</code></li>
+        <li>Specific orbital energy: <code>ε = (7800)²/2 - 3.986e14 / 6.771e6 ≈ -29.3e6 J/kg</code> (negative → bound orbit)</li>
+        <li>Semi-major axis: <code>a = -μ / (2ε) ≈ 6.7e6 m</code> (close to altitude + Earth radius)</li>
+        <li>Orbital period: <code>T = 2π √(a³ / μ) ≈ 5550 s ≈ 92.5 minutes</code></li>
+        <li>Escape velocity at this altitude: <code>v_escape = √(2 * μ / r) ≈ 11000 m/s</code></li>
+      </ul>
+      <p>This matches typical low Earth orbit characteristics that modern tests have shown, proving that our calculations are accurate.</p>
+
+      <h3>Example 2: Escape Velocity Check</h3>
+      <ul>
+        <li>This example checks if an object is escaping Earth's gravity or "sphere of influence", as even in space where gravity might not directly pull you "down" because of your speed, it can still affect your trajectory.</li>
+        <li>Mass: 1000 kg</li>
+        <li>Velocity: 11,200 m/s</li>
+        <li>Distance: 6,371,000 m (Earth radius)</li>
+        <li>Planet Mass: Earth mass</li>
+      </ul>
+      <p><strong>Check:</strong></p>
+      <ul>
+        <li>Escape velocity at surface ≈ 11,186 m/s</li>
+        <li>Velocity is greater → object is escaping orbit.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Tips & Notes</h2>
+      <ul>
+        <li>Inputs must be in SI units (meters, kilograms, seconds) for accuracy.</li>
+        <li>Ensure the distance is measured from the center of mass of the planet/body, not surface altitude alone.</li>
+        <li>The calculator assumes two-body Newtonian physics; perturbations from other bodies are ignored. Meaning it does not take into account the gravitational influence of other celestial bodies.</li>
+        <li>Advanced parameters require apoapsis and periapsis distances to compute eccentricity accurately. </li>
+        <li>Use the "Clear Fields" button to reset inputs and start fresh.</li>
+        <li>For educational purposes, try different mass and velocity combinations to see how they affect the orbit.</li>
+        <li>Refer to glossary for key terms and definitions related to orbital mechanics.</li>
+        <li>This website is still under development. While it works fine for it's current objective, it is far from complete, may have bugs (mostly UI and graphical bugs) and we plan on adding much more complex features and support for games such as KSP.</li>
+        </ul>
+    </section>
+    <section>
+  <h2>Glossary</h2>
+  <ul>
+    <!-- BASIC ORBITAL TERMS -->
+    <li><strong>Apoapsis:</strong> Farthest point in an orbit from the central body.</li>
+    <li><strong>Periapsis:</strong> Closest point in an orbit to the central body.</li>
+    <li><strong>Apogee:</strong> Apoapsis specifically for Earth orbits.</li>
+    <li><strong>Perigee:</strong> Periapsis specifically for Earth orbits.</li>
+    <li><strong>Aphelion:</strong> Apoapsis in a solar orbit.</li>
+    <li><strong>Perihelion:</strong> Periapsis in a solar orbit.</li>
+    <li><strong>Delta-V (Δv):</strong> Change in velocity required for a maneuver, measured in m/s.</li>
+    <li><strong>Specific Impulse (I<sub>sp</sub>):</strong> Measure of engine efficiency, thrust per unit propellant flow, in seconds.</li>
+    <li><strong>Escape Velocity (v<sub>esc</sub>):</strong> Minimum speed to break free from a body's gravity: <code>v<sub>esc</sub> = √(2GM/r)</code>.</li>
+    <li><strong>Orbital Period (T):</strong> Time to complete one orbit: <code>T = 2π√(a³/μ)</code>.</li>
+    <li><strong>Semimajor Axis (a):</strong> Half the longest diameter of an elliptical orbit.</li>
+    <li><strong>Semiminor Axis (b):</strong> Half the shortest diameter of an elliptical orbit.</li>
+    <li><strong>Eccentricity (e):</strong> Shape of orbit, where <code>e=0</code> is circular, <code>0&lt;e&lt;1</code> elliptical, <code>e=1</code> parabolic, <code>e&gt;1</code> hyperbolic.</li>
+    <li><strong>Inclination (i):</strong> Tilt of the orbit relative to a reference plane.</li>
+    <li><strong>Longitude of Ascending Node (Ω):</strong> Angle from a reference direction to the ascending node.</li>
+    <li><strong>Argument of Periapsis (ω):</strong> Angle from the ascending node to periapsis.</li>
+    <li><strong>True Anomaly (ν):</strong> Angle between periapsis and current position in orbit.</li>
+    <li><strong>Mean Anomaly (M):</strong> A time-based angle increasing uniformly with time.</li>
+    <li><strong>Eccentric Anomaly (E):</strong> Geometric construct used to solve Kepler's Equation.</li>
+    
+    <!-- GRAVITY AND CONSTANTS -->
+    <li><strong>Gravitational Constant (G):</strong> Universal constant: <code>6.67430 × 10⁻¹¹ m³ kg⁻¹ s⁻²</code>.</li>
+    <li><strong>Gravitational Parameter (μ):</strong> Product of <code>G</code> and mass of central body <code>(μ = GM)</code>.</li>
+    <li><strong>Surface Gravity (g):</strong> Acceleration due to gravity on a planet's surface.</li>
+    <li><strong>Tidal Force:</strong> Differential gravitational forces stretching objects in orbit.</li>
+    <li><strong>Lagrange Points (L₁-L₅):</strong> Positions where gravitational and centrifugal forces balance.</li>
+    <li><strong>Sphere of Influence (SOI):</strong> Region around a body where its gravity dominates.</li>
+    <li><strong>Standard Gravity (g₀):</strong> Defined as <code>9.80665 m/s²</code>.</li>
+
+    <!-- ENERGY AND MOTION -->
+    <li><strong>Specific Orbital Energy (ε):</strong> Total energy per unit mass: <code>ε = v²/2 − μ/r</code>.</li>
+    <li><strong>Vis-Viva Equation:</strong> <code>v = √(μ(2/r − 1/a))</code>, relating speed, distance, and orbit size.</li>
+    <li><strong>Angular Momentum (h):</strong> Conserved quantity: <code>h = r × v</code>.</li>
+    <li><strong>Mean Motion (n):</strong> Average angular velocity of orbit: <code>n = √(μ/a³)</code>.</li>
+    <li><strong>Specific Mechanical Energy:</strong> Sum of kinetic and potential energy per unit mass.</li>
+
+    <!-- MANEUVERS -->
+    <li><strong>Hohmann Transfer:</strong> Minimum Δv transfer between two circular coplanar orbits.</li>
+    <li><strong>Bi-Elliptic Transfer:</strong> Transfer using two burns with a higher apoapsis for efficiency.</li>
+    <li><strong>Gravity Assist:</strong> Using a planet's motion to alter speed and trajectory.</li>
+    <li><strong>Plane Change Maneuver:</strong> Adjusting inclination with Δv cost depending on speed.</li>
+    <li><strong>Oberth Effect:</strong> Gaining more energy by burning at high speeds near periapsis.</li>
+    <li><strong>Escape Burn:</strong> Δv required to achieve hyperbolic excess velocity.</li>
+
+    <!-- ADVANCED ORBITS -->
+    <li><strong>Geostationary Orbit (GEO):</strong> Circular equatorial orbit with a 24-hour period.</li>
+    <li><strong>Molniya Orbit:</strong> Highly elliptical orbit for high-latitude coverage.</li>
+    <li><strong>Sun-Synchronous Orbit:</strong> Precesses to stay fixed relative to the Sun.</li>
+    <li><strong>Tundra Orbit:</strong> Highly elliptical, geosynchronous orbit inclined for high-latitude dwell.</li>
+    <li><strong>Frozen Orbit:</strong> Minimizes orbital drift due to perturbations.</li>
+    <li><strong>Halo Orbit:</strong> Orbit around Lagrange points.</li>
+
+    <!-- GREEK LETTERS AND SYMBOLS -->
+    <li><strong>α (Alpha):</strong> Angle of ascent or thrust vector angle.</li>
+    <li><strong>β (Beta):</strong> Solar sail light pressure angle or ballistic coefficient.</li>
+    <li><strong>γ (Gamma):</strong> Flight path angle.</li>
+    <li><strong>λ (Lambda):</strong> Longitude or eigenvalue in stability analysis.</li>
+    <li><strong>μ (Mu):</strong> Standard gravitational parameter.</li>
+    <li><strong>ν (Nu):</strong> True anomaly.</li>
+    <li><strong>Ω (Omega):</strong> Longitude of ascending node.</li>
+    <li><strong>ω (Lowercase Omega):</strong> Argument of periapsis.</li>
+    <li><strong>θ (Theta):</strong> General angular position.</li>
+    <li><strong>σ (Sigma):</strong> Summation or cross-sectional area parameter.</li>
+
+    <!-- FORMULAS AND PRINCIPLES -->
+    <li><strong>Kepler's First Law:</strong> Planets move in ellipses with the Sun at one focus.</li>
+    <li><strong>Kepler's Second Law:</strong> Equal areas are swept in equal times.</li>
+    <li><strong>Kepler's Third Law:</strong> <code>T² ∝ a³</code> for all bodies orbiting the same primary.</li>
+    <li><strong>Patched Conics:</strong> Approximation method for multi-body trajectories.</li>
+    <li><strong>Roche Limit:</strong> Distance within which tidal forces disrupt bodies.</li>
+    <li><strong>Hill Sphere:</strong> Region where a body dominates gravitationally over another massive body.</li>
+    <li><strong>Jacobi Constant:</strong> Integral of motion in rotating frames, used for restricted three-body problems.</li>
+    <li><strong>Clohessy-Wiltshire Equations:</strong> Describe relative motion in close-proximity orbits.</li>
+    <li><strong>Lambert's Problem:</strong> Determining an orbit from two positions and time of flight.</li>
+
+    <!-- PERTURBATIONS -->
+    <li><strong>Oblateness (J2):</strong> Perturbation due to a planet’s equatorial bulge.</li>
+    <li><strong>Lunisolar Perturbations:</strong> Orbital changes due to the Moon and Sun.</li>
+    <li><strong>Atmospheric Drag:</strong> Decelerates low Earth orbits.</li>
+    <li><strong>Solar Radiation Pressure:</strong> Force from sunlight impacting spacecraft surfaces.</li>
+    <li><strong>Third-Body Effects:</strong> Gravity from other celestial bodies affecting orbits.</li>
+
+    <!-- PROPULSION AND VEHICLE DYNAMICS -->
+    <li><strong>Thrust-to-Weight Ratio:</strong> Ratio of engine thrust to vehicle weight.</li>
+    <li><strong>Mass Ratio:</strong> Ratio of initial to final mass in the rocket equation.</li>
+    <li><strong>Tsiolkovsky Rocket Equation:</strong> <code>Δv = I<sub>sp</sub> g₀ ln(m₀/mf)</code>.</li>
+    <li><strong>Hypergolic Propellants:</strong> Ignite on contact, used for reliability.</li>
+    <li><strong>Cryogenic Propellants:</strong> Liquefied gases like liquid hydrogen or oxygen.</li>
+    <li><strong>Electric Propulsion:</strong> Thrusters using ionized particles for high-efficiency Δv.</li>
+    <li><strong>Nuclear Thermal Propulsion:</strong> Reactors heating propellant for higher I<sub>sp</sub>.</li>
+
+    <!-- MISCELLANEOUS -->
+    <li><strong>Barycenter:</strong> Center of mass around which two bodies orbit.</li>
+    <li><strong>Synodic Period:</strong> Time between successive alignments of celestial bodies.</li>
+    <li><strong>Sidereal Period:</strong> Orbital period relative to fixed stars.</li>
+    <li><strong>Hyperbolic Excess Velocity (v∞):</strong> Residual speed after escaping a gravity well.</li>
+    <li><strong>Capture Orbit:</strong> Temporary orbit before circularization or deorbit.</li>
+    <li><strong>SOI Transition:</strong> Point where a spacecraft switches dominant gravitational influence.</li>
+    <li><strong>Space Debris:</strong> Non-functional objects in orbit, posing collision risks.</li>
+    <li><strong>Space Weather:</strong> Environmental conditions in space affecting spacecraft operations.</li>
+    <li><strong>Spacecraft Attitude:</strong> Orientation of a spacecraft in space.</li>
+    <li><strong>Spacecraft Bus:</strong> Core systems supporting payload operations.</li>
+    <li><strong>Payload Fairing:</strong> Protective shell for payload during launch.</li>
+    <li><strong>Launch Window:</strong> Optimal time for launching a mission based on orbital mechanics.</li>
+    <li><strong>Mission Design:</strong> Planning and analysis of space missions, including trajectory optimization.</li>
+    <li><strong>Spacecraft Maneuver:</strong> Controlled change in spacecraft trajectory or orientation.</li>
+    <li><strong>Spacecraft Docking:</strong> Joining two spacecraft in orbit for crew transfer or cargo delivery.</li>
+    <li><strong>Spacecraft Rendezvous:</strong> Meeting of two spacecraft in orbit for mission objectives.</li>
+    <li><strong>Spacecraft Reentry:</strong> Controlled return of a spacecraft to Earth's atmosphere.</li>
+    <li><strong>Spacecraft Landing:</strong> Safe touchdown of a spacecraft on a planetary surface.</li>
+    <li><strong>Spacecraft Recovery:</strong> Retrieval of a spacecraft after landing or reentry.</li>
+    <li><strong>Spacecraft Operations:</strong> Day-to-day management and control of a spacecraft during its mission.</li>
+    <li><strong>Spacecraft Telemetry:</strong> Data transmission from spacecraft to ground stations for monitoring and control.</li>
+    <li><strong>Spacecraft Command:</strong> Instructions sent to a spacecraft for specific actions or maneuvers.</li>
+    <li><strong>Spacecraft Autonomy:</strong> Ability of a spacecraft to operate independently without real-time ground control.</li>
+    <li><strong>Inter Planetary Transfer:</strong> Trajectory and maneuvers for traveling between planets.</li>
+    <li><strong>Interstellar Travel:</strong> Hypothetical travel between stars, beyond our solar system.</li>
+    <li><strong>Astrodynamics:</strong> Study of the motion of objects in space, including orbits and trajectories.</li>
+    <li><strong>Celestial Mechanics:</strong> Branch of astronomy dealing with the motions of celestial objects.</li>
+    <li><strong>Orbital Insertion:</strong> Maneuver to place a spacecraft into a stable orbit around a celestial body.</li>
+    <li><strong>Orbital Decay:</strong> Gradual decrease in altitude of a low Earth orbit due to atmospheric drag.</li>
+    <li><strong>Orbital Resonance:</strong> Gravitational interaction between two orbiting bodies that leads to periodic gravitational effects.</li>
+    <li><strong>Orbital Maneuvering System (OMS):</strong> Propulsion system used for orbital maneuvers, such as changing orbits or attitude.</li>
+    <li><strong>Spacecraft Propellant:</strong> Fuel used by spacecraft engines for propulsion.</li>
+    <li><strong>Spacecraft Power System:</strong> Provides electrical power to spacecraft systems and instruments.</li>
+    <li><strong>Spacecraft Communication System:</strong> Enables data transmission between spacecraft and ground stations.</li>
+    <li><strong>Spacecraft Thermal Control:</strong> Maintains temperature within operational limits using insulation, radiators, and heaters.</li>
+    <li><strong>Spacecraft Attitude Control System:</strong> Manages spacecraft orientation using thrusters, reaction wheels, or gyroscopes.</li>
+    <li><strong>Spacecraft Guidance, Navigation, and Control (GNC):</strong> Systems that determine spacecraft position, velocity, and orientation, and execute maneuvers.</li>
+    <li><strong>Spacecraft Instrumentation:</strong> Sensors and devices used for scientific measurements and observations.</li>
+  </ul>
+</section>
+
+      <h2>Further Reading</h2>
+      <ul>
+        <li><a href="https://en.wikipedia.org/wiki/Orbital_mechanics">Wikipedia: Orbital Mechanics</a></li>
+        <li><a href="https://www.grc.nasa.gov/www/k-12/rocket/rktorb.html">NASA Rocketry: Orbits</a></li>
+        <li><a href="https://www.khanacademy.org/science/physics/centripetal-force-and-gravitation/orbiting-satellites/a/orbiting-satellites">Khan Academy: Orbiting Satellites</a></li>
+      </ul>
+    </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Orbital Mechanics Simulator. All rights reserved.</p>
+        <p>Created by Levin. Discord: @epicallycooliguess </p>
+
